@@ -1,0 +1,34 @@
+/**
+ * Created by andrew on 2/2/17.
+ */
+var mainController = function (resource) {
+    this.resource = resource;
+}
+
+mainController.prototype.index = function () {
+    this.resource.writeHead(200);
+    this.resource.end('this is index page');
+}
+// mainController.prototype.getCredentials = function (data) {
+//
+//     this.db(data, function (data) {
+//         if (!data.length) {
+//             throw new Error('error');
+//         }
+//         return data;
+//     })
+// }
+
+mainController.prototype.get = function (){
+
+}
+
+mainController.prototype.getById = function (id){
+    //this.af.database.object(this.table+id);
+}
+
+mainController.prototype.save = function (id) {
+
+}
+
+module.exports = mainController;
