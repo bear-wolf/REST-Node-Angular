@@ -1,3 +1,36 @@
-<p>
-  user works!
-</p>
+<div class="row">
+
+   <span class="title">
+      {{title}}
+      <a [routerLink]="['/user/add']" class="btn btn-primary pull-right">add</a>
+    </span>
+
+  <div *ngIf="users">
+    <table class="table">
+      <thead>
+      <tr>
+        <td>firstName</td>
+        <td>lastName</td>
+        <td>middleName</td>
+        <td>address</td>
+        <td>gender</td>
+        <td>operation</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users; let i = index;">
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.middleName}}</td>
+        <td>{{user.address}}</td>
+        <td>{{user.gender}}</td>
+        <td>
+          <a href="javascript:void(0)" (click)="remove(user.id)" >delete</a>
+          <a [routerLink]="['/user/'+user.id+'/edit']">update</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
