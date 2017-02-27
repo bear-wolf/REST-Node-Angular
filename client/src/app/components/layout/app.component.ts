@@ -8,7 +8,9 @@ import {Component, OnInit} from '@angular/core';
 export class AppComponent implements OnInit{
   public currentUser = null;
 
-  constructor () {}
+  constructor () {
+    console.log('AppComponent')
+  }
 
   ngOnInit():void {
   }

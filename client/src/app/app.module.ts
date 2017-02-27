@@ -9,10 +9,13 @@ import {appRoutes} from "./routes";
 import {RouterModule} from "@angular/router";
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import {UserService} from "./components/user/user.service";
+import {HomeComponent} from "./components/home/home.component";
+// import {FORM_PROVIDERS, FORM_DIRECTIVES} from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     UserComponent,
     UserAddComponent
   ],

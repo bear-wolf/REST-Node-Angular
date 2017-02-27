@@ -1,9 +1,12 @@
 <div class="row">
 
-   <span class="title">
-      {{title}}
-      <a [routerLink]="['/user/add']" class="btn btn-primary pull-right">add</a>
-    </span>
+  <span class="title">
+      Page of users
+      <a [routerLink]="['/users/add']" class="btn btn-primary float-lg-right">add</a>
+  </span>
+
+  <router-outlet>
+  </router-outlet>
 
   <div *ngIf="users">
     <table class="table">

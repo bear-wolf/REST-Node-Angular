@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserValidator} from "../user.validator";
 
 @Component({
-  selector: 'app-user-add',
+  selector: 'user-add',
   templateUrl: './user-add.component.html',
   providers: [UserService, FormBuilder],
   styleUrls: ['./user-add.component.css']
@@ -29,6 +29,11 @@ export class UserAddComponent implements OnInit {
     //this.user = new User();
     this.submitted = false;
 
+    object.user = new FormGroup({
+          password: new FormControl('', UserValidator.required),
+          email: new FormControl('', UserValidator.email)
+      });
+
     let subscription = this.activatedRoute.params.subscribe(
         (param: any) => {
           subscription ? subscription.unsubscribe() : '';
@@ -37,17 +42,10 @@ export class UserAddComponent implements OnInit {
           if (userId) {
             this.userService.getById(userId)
                 .subscribe(
-                    (data) => {
-                        object.user = new FormGroup({
-                            password: new FormControl(data.password, UserValidator.required),
-                            email: new FormControl(data.email, UserValidator.email)
-                        });
-                    });
-          } else {
-              object.user = new FormGroup({
-                  password: new FormControl('', UserValidator.required),
-                  email: new FormControl('',UserValidator.email)
-              });
+                (data) => {
+                    (<FormControl>this.user.controls['password']).setValue(data.password);
+                    (<FormControl>this.user.controls['email']).setValue(data.email);
+                });
           }
         });
   }
