@@ -1,0 +1,37 @@
+
+<div class="login-section" data-in-center>
+  <span class="title text-center" [innerText]="'Page of authorization'"></span>
+
+  <form [formGroup]="user" [className]="submitted ? 'submitted': ''" (ngSubmit)="logIn(user)">
+    <span class="message" *ngIf="message" [innerText]="message"></span>
+    <ul>
+      <li>
+        <div class="form-group">
+          <span class="inputs-label col-xs-2" for="email">login</span>
+          <div class="columns-section">
+            <input type="text" id="email" formControlName="email" class="form-control" required>
+            <small class="b_error" *ngIf="!user.controls.email.valid && submitted">
+              {{user.controls.email.errors['error']}}
+            </small>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="form-group">
+          <span class="inputs-label col-xs-2" for="password">password</span>
+          <div class="columns-section">
+            <input type="password" id="password" formControlName="password" class="form-control" required>
+            <small class="b_error" *ngIf="!user.controls.password.valid && submitted">
+              {{user.controls.password.errors['error']}}
+            </small>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="block-buttons text-xs-center">
+          <button type="submit" class="btn btn-primary" [innerText]="'Log In'"></button>
+        </div>
+      </li>
+    </ul>
+  </form>
+</div>

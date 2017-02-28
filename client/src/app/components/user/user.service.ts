@@ -8,6 +8,7 @@ import {User} from "../../model/user";
 @Injectable()
 export class UserService {
     private url = Settings.server+'users';
+    private server = Settings.server;
     public title = "Page of users";
 
     constructor(private http: Http) {
@@ -33,8 +34,11 @@ export class UserService {
         return this.http.get(this.url, { search: params })
             .map(data=>{ return JSON.parse(data['_body'])});
     }
-    logOut() {
-
+    logOut(): Observable<any> {
+        return this.http.post(this.server+'logout/',{})
+            .map(data=>{
+                return data;
+            });
     }
 
     save (model:User): Observable<User> {
@@ -47,6 +51,11 @@ export class UserService {
         };
 
         return observer.map(data=>{JSON.parse(data['_body'])});
+    }
+
+    getCurrentUser() {
+        let user:User = JSON.parse(sessionStorage.getItem('currentUser'));
+        return user;
     }
 
     addSession(user){

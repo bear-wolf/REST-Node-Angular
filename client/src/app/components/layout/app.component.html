@@ -8,6 +8,20 @@
     </div>
   </div>
 
+  <div class="top-nav clearfix">
+    <ul class="nav float-xs-right top-menu">
+      <li *ngIf="currentUser" class="dropdown">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" [innerText]="currentUser.email"></a>
+        <ul class="dropdown-menu extended logout">
+          <li><a href="javascript:void(0)" (click)="logOut()"><i class="fa fa-key"></i> Log Out</a></li>
+        </ul>
+      </li>
+      <li *ngIf="!currentUser">
+        <a href="#" class="dropdown-toggle" routerLink="/login">Log In</a>
+      </li>
+    </ul>
+  </div>
+
 </header>
 
 <aside>

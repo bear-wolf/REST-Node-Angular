@@ -1,3 +1,9 @@
+@import "css/bootstrap.min.css";
+@import "css/bucket-style.css";
+@import "css/bucket-ico-fonts.css";
+ul li {
+  list-style: none!important;
+}
 .title {
   display: block;
   width: 100%;
@@ -7,4 +13,9 @@
 }
 #sidebar {
   margin-left: -15px;
+}
+ul.top-menu > li > a {
+  float: right;
+  height: 34px;
+  padding: 0 15px;
 }

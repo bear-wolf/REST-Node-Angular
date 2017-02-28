@@ -23,6 +23,21 @@ route.prototype.init = function () {
         res.send('GET request to the homepage');
     });
 
+    this.app.get('/login', function (req, res) {
+        if (req.query.email && req.query.password) {
+            object.addHeader(req, res);
+            (new mainController(res,req)).getCredentials(req.query);
+        }
+    });
+    this.app.post('/logout', function (req, res) {
+        var index = process.token.indexOf(req.headers.token)
+        if (index>=0) {
+            process.token.splice(index,1) // remove;
+        }
+        object.addHeader(req, res);
+
+    });
+
     this.app.get('/users', function (req, res) {
         object.addHeader(res);
         (new mainController(res)).get();
