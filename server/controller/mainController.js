@@ -1,8 +1,13 @@
 /**
  * Created by andrew on 2/2/17.
  */
+
+var data = require('./../data.json'),
+    crypto = require('crypto');
+
 var mainController = function (resource) {
     this.resource = resource;
+    this.db = data;
 }
 
 mainController.prototype.index = function () {
@@ -24,36 +29,44 @@ mainController.prototype.get = function (){
 }
 
 mainController.prototype.getCredentials = function (data) {
-    var object = this;
+    var object = this,
+        user = null,
+        headerResponse = {
+            'Content-Type': 'application/json'
+        },
+        arrLength = this.db.user.length,
+        users = this.db.user;
 
-    this.db.users().getCredentials(data.email, data.password, function (data, error) {
-        if (error) throw Error(error);
+    for (var key = 0; key < arrLength; key++) {
+        if (users[key].email == data.email && users[key].password == data.password && users[key].status ==1) {
+            user = users[key];
+            break;
+        }
+    }
 
-        if (Object.keys(data).length) {
-            var token = crypto.randomBytes(256).toString('hex') // Synchronous
-            //object.resource.setHeader('Token', token);
+    if (user) {
+        var token = crypto.randomBytes(256).toString('hex') // Synchronous
 
-            if (!process.token) {
-                process.token = [];
-                process.token.push(token);
-            }
-
-            data = {
-                token : token,
-                body : data
-            }
-
-        } else {
-            data = {
-                body: []
-            }
+        if (!process.token) {
+            process.token = [];
+            process.token.push(token);
         }
 
-        object.resource.writeHead(200, {
-            'Content-Type': 'application/json'
-        });
+        data = {
+            token : token,
+            body : user,
+            status: true
+        }
+        object.resource.writeHead(200, headerResponse);
         object.resource.end(JSON.stringify(data));
-    })
+    } else {
+        object.resource.writeHead(401, headerResponse);
+        object.resource.end(JSON.stringify({
+            status: false,
+            message: 'User is not administrator'
+        }));
+    }
+    return user;
 }
 
 mainController.prototype.getById = function (id){

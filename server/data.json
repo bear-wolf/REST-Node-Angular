@@ -3,8 +3,9 @@
         {
             "id": 1,
             "password": "admin",
-            "email": "admin@amdin.ua",
-            "dataCreate": 123
+            "email": "admin@admin.ua",
+            "dataCreate": 123,
+            "status": 1
         }
     ]
 }

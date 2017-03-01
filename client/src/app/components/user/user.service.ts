@@ -26,21 +26,6 @@ export class UserService {
         return this.http.get(this.url+id).map(data=>{ return JSON.parse(data['_body'])});
     }
 
-    logIn(email:string, password: string): Observable<User> {
-        let params = new URLSearchParams();
-        params.set('email', email);
-        params.set('password', password);
-
-        return this.http.get(this.url, { search: params })
-            .map(data=>{ return JSON.parse(data['_body'])});
-    }
-    logOut(): Observable<any> {
-        return this.http.post(this.server+'logout/',{})
-            .map(data=>{
-                return data;
-            });
-    }
-
     save (model:User): Observable<User> {
         let observer;
 
@@ -51,21 +36,6 @@ export class UserService {
         };
 
         return observer.map(data=>{JSON.parse(data['_body'])});
-    }
-
-    getCurrentUser() {
-        let user:User = JSON.parse(sessionStorage.getItem('currentUser'));
-        return user;
-    }
-
-    addSession(user){
-        sessionStorage.setItem('currentUser', user);
-    }
-    getSession() {
-        sessionStorage.getItem('currentUser');
-    }
-    removeSession() {
-        sessionStorage.removeItem('currentUser');
     }
 
     // Delete

@@ -11,6 +11,8 @@ import { UserAddComponent } from './components/user/user-add/user-add.component'
 import {UserService} from "./components/user/user.service";
 import {HomeComponent} from "./components/home/home.component";
 import {AuthorizationComponent} from "./components/authorization/authorization.component";
+import {AuthorizationService} from "./components/authorization/authorization.service";
+import {NgbModule, NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 // import {FORM_PROVIDERS, FORM_DIRECTIVES} from '@angular/common';
 
 @NgModule({
@@ -26,9 +28,12 @@ import {AuthorizationComponent} from "./components/authorization/authorization.c
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    NgbModule, // for bootstrap
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [UserService, FormBuilder],
+  providers: [UserService, FormBuilder,
+    NgbDropdownConfig, // bootstrap dropdown
+    AuthorizationService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

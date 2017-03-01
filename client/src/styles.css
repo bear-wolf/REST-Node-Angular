@@ -17,5 +17,15 @@ ul li {
 ul.top-menu > li > a {
   float: right;
   height: 34px;
-  padding: 0 15px;
+  line-height: 34px;
+  padding: 0 15px!important;
+}
+ul.top-menu > li > a:hover {
+  padding: 0 15px!important;
+}
+.show > .dropdown-menu {
+  display: block;
+}
+.show > .dropdown-menu a {
+  display: block;
 }

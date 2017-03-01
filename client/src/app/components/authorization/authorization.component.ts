@@ -4,6 +4,7 @@ import {FormGroup, FormControl} from "@angular/forms";
 import {UserService} from "../user/user.service";
 import {UserValidator} from "../user/user.validator";
 import {Subscription} from "rxjs";
+import {AuthorizationService} from "./authorization.service";
 
 @Component({
   selector: 'authorization',
@@ -19,15 +20,12 @@ export class AuthorizationComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private userService: UserService
+      private authService: AuthorizationService
   ) {
       console.log('authorization()');
   }
 
   ngOnInit() {
-    if (this.userService.getCurrentUser()) {
-        this.router.navigate(['/']); // go home
-    }
 
     this.user = new FormGroup({
       email: new FormControl('', UserValidator.required),
@@ -40,16 +38,15 @@ export class AuthorizationComponent implements OnInit {
 
     this.submitted = true;
     if (model.valid) { //++++
-      this.userService.logIn(model.value.email, model.value.password)
+      this.authService.logIn(model.value.email, model.value.password)
           .subscribe((data:any) =>{
-              if (data.body.length) {
-                  data.body[0].token = data.token;
-                  object.userService.addSession(JSON.stringify(data.body[0]));
+              if (data.status) {
+                  data.body.token = data.token;
+                  object.authService.addSession(JSON.stringify(data.body));
                   object.router.navigate(['']);
               } else {
                   object.message = 'User is not exist'
               }
-            //object.addUser(model.value);
           },
           error =>{
               object.message = error.message;
@@ -58,7 +55,7 @@ export class AuthorizationComponent implements OnInit {
   }
 
   logOut() {
-    this.userService.removeSession();
+    this.authService.removeSession();
     this.router.navigate(['']);
   }
 }

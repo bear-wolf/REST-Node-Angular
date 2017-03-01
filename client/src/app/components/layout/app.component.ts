@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user/user.service";
 import {Router} from "@angular/router";
+import {AuthorizationService} from "../authorization/authorization.service";
 
 @Component({
   selector: 'app-root',
@@ -10,15 +11,18 @@ import {Router} from "@angular/router";
 export class AppComponent implements OnInit{
   public currentUser = null;
 
-  constructor (private userService: UserService,
+  constructor (private authService: AuthorizationService,
                private router : Router) {
     console.log('AppComponent')
   }
 
   ngOnInit():void {
-    let object = this,
-        user = this.userService.getCurrentUser();
+    this.getAuth();
+  }
 
+  getAuth() {
+    let object = this,
+        user = this.authService.getCurrentUser();
 
     if (user) {
       object.currentUser = user;
@@ -28,7 +32,7 @@ export class AppComponent implements OnInit{
   logOut() {
     let object = this;
 
-    this.userService.logOut()
+    this.authService.logOut()
         .subscribe(data=>{
           object.router.navigate(['']);
         });
