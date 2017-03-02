@@ -44,6 +44,7 @@ export class AuthorizationComponent implements OnInit {
                   data.body.token = data.token;
                   object.authService.addSession(JSON.stringify(data.body));
                   object.router.navigate(['']);
+                  window.location.reload();
               } else {
                   object.message = 'User is not exist'
               }

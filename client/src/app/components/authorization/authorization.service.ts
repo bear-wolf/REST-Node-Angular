@@ -2,7 +2,7 @@
  * Created by andrew on 3/1/17.
  */
 import {Injectable, Input} from '@angular/core';
-import {Http, Response, URLSearchParams, RequestOptions, Headers} from "@angular/http";
+import {Http, Response, Request, URLSearchParams, RequestOptions, Headers, RequestMethod} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs/Rx";
 import { Settings } from '../../settings';
 import 'rxjs/Rx';
@@ -26,11 +26,36 @@ export class AuthorizationService {
         return this.http.get(this.url, { search: params })
             .map(data=>{ return JSON.parse(data['_body'])});
     }
-    logOut(): Observable<any> {
-        return this.http.post(this.server+'logout/',{})
-            .map(data=>{
-                return data;
-            });
+    logOut(token: string): Observable<any> {
+        var request,
+            headers = new Headers();
+
+        headers.append('Content-Type', 'application/json');
+
+        request = new Request({
+            url: this.server+'logout/',
+            method: RequestMethod.Post,
+            headers: headers
+        });
+        request._body = JSON.stringify({token: token});
+        return this.http.request(request).map(data=>{ return JSON.parse(data['_body']);});
+    }
+
+    isAuthByToken(token: string) : Observable<any> {
+        let request,
+            headers = new Headers();
+
+        headers.append('Content-Type', 'application/json');
+        request = new Request({
+            url: this.server+'isAuth',
+            method: RequestMethod.Post,
+            headers: headers
+        });
+
+        request._body = JSON.stringify({token: token});
+        return this.http.request(request).map(data=> {
+            return JSON.parse(data['_body']);
+        });
     }
 
     addSession(user){
@@ -43,8 +68,7 @@ export class AuthorizationService {
         sessionStorage.removeItem('currentUser');
     }
 
-    getCurrentUser() {
-        let user:User = JSON.parse(sessionStorage.getItem('currentUser'));
-        return user;
+    getCurrentUser(): User {
+        return JSON.parse(sessionStorage.getItem('currentUser'));
     }
 }

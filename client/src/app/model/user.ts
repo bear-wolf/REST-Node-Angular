@@ -3,6 +3,7 @@ export class User {
     id: string;
     password: string;
     email: string;
+    token?: string;
     dataCreate: number;
     dataUpdate?: number;
 
