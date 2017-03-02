@@ -37,7 +37,7 @@ route.prototype.init = function () {
         }
         next();
     });
-    this.app.post('/logout', function (req, res) {
+    object.app.post('/logout', function (req, res) {
         var data, index=-1;
 
         data = {
@@ -75,12 +75,14 @@ route.prototype.init = function () {
     });
 
 
-    this.app.get('/users', function (req, res) {
-        object.addHeader(res);
+    object.app.get('/users', function (req, res) {
         (new mainController(res)).get();
     });
+    object.app.get('/users/:id', function (req, res) {
+        (new mainController(res)).getById(req.query.id);
+    });
 
-    this.app.post('/users', function (req, res) {
+    object.app.post('/users', function (req, res) {
         object.addHeader(res);
         (new mainController(res)).save(req);
     });

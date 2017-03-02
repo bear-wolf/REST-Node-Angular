@@ -24,8 +24,26 @@ mainController.prototype.index = function () {
 //     })
 // }
 
-mainController.prototype.get = function (){
+mainController.prototype.get = function () {
+    var data,
+        object = this,
+        list = [],
+        arrLength = this.db.user.length,
+        users = this.db.user;
 
+    for (var key = 0; key < arrLength; key++) {
+        if (!users[key].status) {
+            list.push(users[key]);
+            break;
+        }
+    }
+
+    data = {
+        body : list,
+        status: true
+    }
+    object.resource.writeHead(200);
+    object.resource.end(JSON.stringify(data));
 }
 
 mainController.prototype.getCredentials = function (data) {
@@ -70,7 +88,25 @@ mainController.prototype.getCredentials = function (data) {
 }
 
 mainController.prototype.getById = function (id){
-    //this.af.database.object(this.table+id);
+    var data,
+        object = this,
+        list = [],
+        arrLength = this.db.user.length,
+        users = this.db.user;
+
+    for (var key = 0; key < arrLength; key++) {
+        if (!users[key].status && users[key].id == id) {
+            list.push(users[key]);
+            break;
+        }
+    }
+
+    data = {
+        body : list,
+        status: true
+    }
+    object.resource.writeHead(200);
+    object.resource.end(JSON.stringify(data));
 }
 
 mainController.prototype.save = function (id) {

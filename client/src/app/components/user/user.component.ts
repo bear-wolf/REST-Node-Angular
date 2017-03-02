@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class UserComponent implements OnInit {
   users: User[];
   title: string;
+    usersOfCount = 0;
   isChildRoute: boolean;
 
   constructor(
@@ -19,13 +20,15 @@ export class UserComponent implements OnInit {
   ) {
       console.log('UserComponent');
 
-      this.isChildRoute = false;
   }
 
   ngOnInit() {
     this.userService.get().subscribe(
-        (data: Array<User>)=>{
-          this.users = data;
+        (data)=>{
+            if (data['status']) {
+                this.users = data['body'];
+                this.usersOfCount = this.users.length;
+            }
         })
   }
 

@@ -8,32 +8,35 @@
   <router-outlet>
   </router-outlet>
 
-  <div *ngIf="users">
-    <table class="table">
-      <thead>
-      <tr>
-        <td>firstName</td>
-        <td>lastName</td>
-        <td>middleName</td>
-        <td>address</td>
-        <td>gender</td>
-        <td>operation</td>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let user of users; let i = index;">
-        <td>{{user.firstName}}</td>
-        <td>{{user.lastName}}</td>
-        <td>{{user.middleName}}</td>
-        <td>{{user.address}}</td>
-        <td>{{user.gender}}</td>
-        <td>
-          <a href="javascript:void(0)" (click)="remove(user.id)" >delete</a>
-          <a [routerLink]="['/user/'+user.id+'/edit']">update</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="block" *ngIf="false">
+    <label [innerText]="'In list'+ usersOfCount"></label>
+    <div *ngIf="users">
+      <table class="table">
+        <thead>
+        <tr>
+          <td>firstName</td>
+          <td>lastName</td>
+          <td>middleName</td>
+          <td>address</td>
+          <td>gender</td>
+          <td>operation</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users; let i = index;">
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.middleName}}</td>
+          <td>{{user.address}}</td>
+          <td>{{user.gender}}</td>
+          <td>
+            <a href="javascript:void(0)" (click)="remove(user.id)" >delete</a>
+            <a [routerLink]="['/user/'+user.id+'/edit']">update</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>

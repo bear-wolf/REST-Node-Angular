@@ -29,7 +29,7 @@
 <aside>
   <div id="sidebar" class="nav-collapse">
     <div class="leftside-navigation">
-      <ul class="sidebar-menu" id="nav-accordion">
+      <ul class="sidebar-menu" id="nav-accordion" *ngIf="currentUser">
         <li routerLinkActive="active">
           <a routerLink="/users" routerLinkActive="active" ><i class="fa fa-fw fa-user"></i><span>Users</span></a>
         </li>
