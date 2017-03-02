@@ -50,7 +50,7 @@ export class AuthorizationComponent implements OnInit {
               }
           },
           error =>{
-              object.message = error.message;
+              object.message = JSON.parse(error['_body']).message;
           })
     }
   }

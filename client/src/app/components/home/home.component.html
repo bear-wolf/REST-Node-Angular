@@ -1,8 +1,14 @@
 
-<div *ngIf="currentUser">
+<div *ngIf="!currentUser">
   <p>
     Для авторизации введите: <br>
     Логин: admin<br>
     Пароль: admin
   </p>
+</div>
+
+<div *ngIf="currentUser">
+    <p>
+        Данные на сервере храняться в обычной *.json для простоты развёртование тестового проекту.
+    </p>
 </div>
