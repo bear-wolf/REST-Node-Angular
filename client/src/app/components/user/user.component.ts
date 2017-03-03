@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked} from '@angular/core';
 import {UserService} from "./user.service";
 import {User} from "./../../model/user";
 import {Router} from "@angular/router";
@@ -8,15 +8,14 @@ import {Router} from "@angular/router";
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit { // OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked
   users: User[];
   title: string;
   usersOfCount = 0;
   isChildRoute: boolean;
 
   constructor(
-      private userService: UserService,
-      private router: Router,
+      private userService: UserService
   ) {
       console.log('UserComponent');
       this.users = [];
@@ -48,4 +47,26 @@ export class UserComponent implements OnInit {
             );
         }
     }
+
+    // ngOnChanges(){
+    //   console.log('ngOnChanges');
+    // }
+    // ngDoCheck(){
+    //   console.log('ngDoCheck');
+    // }
+    // ngAfterContentInit(){
+    //     console.log('ngAfterContentInit');
+    // }
+    // ngAfterContentChecked(){
+    //     console.log('ngAfterContentChecked');
+    // }
+    // ngAfterViewInit(){
+    //     console.log('ngAfterViewInit');
+    // }
+    // ngAfterViewChecked(){
+    //     console.log('ngAfterViewChecked');
+    // }
+    // ngOnDestroy(){
+    //     console.log('ngOnDestroy');
+    // }
 }
