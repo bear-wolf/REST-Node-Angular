@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 export class UserComponent implements OnInit {
   users: User[];
   title: string;
-    usersOfCount = 0;
+  usersOfCount = 0;
   isChildRoute: boolean;
 
   constructor(
@@ -19,17 +19,33 @@ export class UserComponent implements OnInit {
       private router: Router,
   ) {
       console.log('UserComponent');
-
+      this.users = [];
   }
 
   ngOnInit() {
-    this.userService.get().subscribe(
-        (data)=>{
-            if (data['status']) {
-                this.users = data['body'];
-                this.usersOfCount = this.users.length;
-            }
-        })
+    this.get();
   }
 
+  get(){
+      this.userService.get().subscribe(
+          (data)=> {
+              if (data['status']) {
+                  this.users = data['body'];
+                  this.usersOfCount = this.users.length;
+              }
+          })
+  }
+
+    remove(id:number) {
+        if (confirm("You really want remove it?")) {
+        this.userService.remove(id)
+            .subscribe(
+                (data) => {
+                    if (data.status) {
+                        this.get();
+                    }
+                }
+            );
+        }
+    }
 }

@@ -19,6 +19,7 @@ export class UserAddComponent implements OnInit {
   user: FormGroup;
 
   constructor(private userService: UserService,
+              private router: Router,
               private activatedRoute: ActivatedRoute) {
     console.log('UserAddComponent');
   }
@@ -43,16 +44,34 @@ export class UserAddComponent implements OnInit {
             this.userService.getById(userId)
                 .subscribe(
                 (data) => {
-                    (<FormControl>this.user.controls['password']).setValue(data.password);
-                    (<FormControl>this.user.controls['email']).setValue(data.email);
+                    if (data.status) {
+                        data = data['body'];
+                        (<FormControl>this.user.controls['password']).setValue(data.password);
+                        (<FormControl>this.user.controls['email']).setValue(data.email);
+                    }
                 });
           }
         });
   }
 
-  save(model:User, form: FormGroup) {
-    if (form.valid) {
-      this.userService.save(model);
+  save(model, validation:boolean) {
+      let object = this,
+          data:User = model.value,
+          currentTime = (new Date()).getTime();
+
+    if (validation) {
+        data.status = 0; // user
+        (data.id) ? data.dataUpdate = currentTime : data.dataCreate = currentTime;
+
+      this.userService.save(data)
+          .subscribe((data)=>{
+              if (data.status) {
+                  object.router.navigate(['/users']);
+              }
+          },
+          error=>{
+              object.message = JSON.parse(error['_body']).message;
+          });
     } else {
       this.submitted = true;
     }

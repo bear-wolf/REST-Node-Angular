@@ -1,11 +1,1 @@
-{
-    "user": [
-        {
-            "id": 1,
-            "password": "admin",
-            "email": "admin@admin.ua",
-            "dataCreate": 123,
-            "status": 1
-        }
-    ]
-}
+{"user":[{"id":1,"password":"admin","email":"admin@admin.ua","dataCreate":1488534122070,"status":1},{"password":"test","email":"test@test.ua","status":0,"dataCreate":1488543752496,"id":2},{"password":"test1","email":"test1@test.ua","status":0,"dataCreate":1488543780299,"id":3}]}

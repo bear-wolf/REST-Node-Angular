@@ -1,37 +1,39 @@
-<div class="row">
+<div class="b_page">
 
-  <span class="title" *ngIf="">
+  <div class="row">
+    <div class="title">
       Page of users
-      <a [routerLink]="['/users/add']" class="btn btn-primary float-lg-right">add</a>
-  </span>
+      <a [routerLink]="['/users/add']" class="btn btn-primary">add</a>
+    </div>
+  </div>
 
   <router-outlet>
   </router-outlet>
 
-  <div class="block">
-    <label [innerText]="'In list'+ usersOfCount"></label>
-    <div *ngIf="users">
+  <div class="row b_content">
+    <label class="title" [innerText]="'All records: '+ usersOfCount"></label>
+    <div *ngIf="users.length">
       <table class="table">
         <thead>
         <tr>
-          <td>firstName</td>
-          <td>lastName</td>
-          <td>middleName</td>
-          <td>address</td>
-          <td>gender</td>
+          <td>#</td>
+          <td>email</td>
+          <td>password</td>
+          <td>data create</td>
+          <td>data update</td>
           <td>operation</td>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let user of users; let i = index;">
-          <td>{{user.firstName}}</td>
-          <td>{{user.lastName}}</td>
-          <td>{{user.middleName}}</td>
-          <td>{{user.address}}</td>
-          <td>{{user.gender}}</td>
+          <td>{{i}}</td>
+          <td>{{user.email}}</td>
+          <td>***</td>
+          <td>{{user.dataCreate}}</td>
+          <td>{{user.dataUpdate}}</td>
           <td>
             <a href="javascript:void(0)" (click)="remove(user.id)" >delete</a>
-            <a [routerLink]="['/user/'+user.id+'/edit']">update</a>
+            <a [routerLink]="['/users/'+user.id+'/edit']">update</a>
           </td>
         </tr>
         </tbody>

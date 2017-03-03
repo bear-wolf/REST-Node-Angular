@@ -1,12 +1,12 @@
-<div>
+<div class="row" >
   <span class="title text-center" [innerText]="'Registry'"></span>
-  <!--<span class="message" *ngIf="message" [innerText]="message" ></span>-->
+  <span class="message" *ngIf="message" [innerText]="message" ></span>
 
-  <form [formGroup]="user" [className]="submitted ? 'submitted': ''" (ngSubmit)="save(user, user.valid)">
+  <form [formGroup]="user" novalidate [className]="submitted ? 'submitted': ''" (ngSubmit)="save(user, user.valid)">
     <ul>
       <li>
-        <div class="form-group row">
-          <span class="inputs-label col-xs-2" for="email">email</span>
+        <div class="form-group">
+          <span class="inputs-label" for="email">email</span>
           <div class="columns-section">
             <input type="email" id="email" formControlName="email" class="form-control">
             <small class="b_error" *ngIf="!user.controls.email.valid && submitted">
@@ -16,8 +16,8 @@
         </div>
       </li>
       <li>
-        <div class="form-group row">
-          <span class="inputs-label col-xs-2" for="password">password</span>
+        <div class="form-group">
+          <span class="inputs-label" for="password">password</span>
           <div class="columns-section">
             <input id="password" type="password" formControlName="password" class="form-control">
             <small class="b_error" *ngIf="!user.controls.password.valid && submitted">
@@ -28,7 +28,7 @@
       </li>
 
       <li>
-        <div class="block-buttons">
+        <div class="block-buttons text-xs-center">
           <button type="submit" class="btn btn-primary">Save</button>
         </div>
       </li>

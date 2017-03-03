@@ -6,6 +6,7 @@ export class User {
     token?: string;
     dataCreate: number;
     dataUpdate?: number;
+    status: number; //1 - admin; 0 - user
 
     constructor(obj?: any) {
         this.id = obj && obj.id;

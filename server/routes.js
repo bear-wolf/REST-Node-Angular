@@ -21,8 +21,7 @@ route.prototype.init = function () {
             //res.setHeader('Access-Control-Allow-Headers', ''); // Request methods you wish to allow
             res.statusCode = 200;
             res.end('');
-        }
-        next();
+        } else next();
     });
 
     // GET method route
@@ -78,13 +77,26 @@ route.prototype.init = function () {
     object.app.get('/users', function (req, res) {
         (new mainController(res)).get();
     });
-    object.app.get('/users/:id', function (req, res) {
-        (new mainController(res)).getById(req.query.id);
-    });
-
     object.app.post('/users', function (req, res) {
-        object.addHeader(res);
-        (new mainController(res)).save(req);
+        (new mainController(res)).save(req.body);
+    });
+    object.app.all('/users/:id', function (req, res, next) {
+        switch (req.method) {
+            case 'POST': {
+                (new mainController(res)).save(req.body);
+                break;
+            }
+            case 'GET': {
+                (new mainController(res)).getById(req.url.substring(req.url.lastIndexOf('/')+1));
+                break;
+            }
+            case 'DELETE': {
+                (new mainController(res)).removeById(req.url.substring(req.url.lastIndexOf('/')+1));
+                break
+            }
+            default: break;
+        }
+        next(); // pass control to the next handler
     });
 
     this.app.use(function (req, res) {

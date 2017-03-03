@@ -2,12 +2,15 @@
  * Created by andrew on 2/2/17.
  */
 
-var data = require('./../data.json'),
-    crypto = require('crypto');
+var fileOfData = 'data.json',
+    data = require('./../'+ fileOfData),
+    crypto = require('crypto'),
+    fs = require('fs');
 
 var mainController = function (resource) {
     this.resource = resource;
     this.db = data;
+    this.fs = fs;
 }
 
 mainController.prototype.index = function () {
@@ -24,6 +27,29 @@ mainController.prototype.index = function () {
 //     })
 // }
 
+mainController.prototype.removeById = function (id) {
+    var data,
+        label = false,
+        object = this,
+        users = this.db.user,
+        arrLength = users.length;
+
+    for (var key = 0; key < arrLength; key++) {
+        if (users[key].id == id) {
+            users.splice(key, 1);
+            label = true;
+            break;
+        }
+    }
+
+    if (label) {
+        data = {
+            status: true
+        }
+        object.resource.writeHead(200);
+        object.resource.end(JSON.stringify(data));
+    }
+}
 mainController.prototype.get = function () {
     var data,
         object = this,
@@ -34,7 +60,6 @@ mainController.prototype.get = function () {
     for (var key = 0; key < arrLength; key++) {
         if (!users[key].status) {
             list.push(users[key]);
-            break;
         }
     }
 
@@ -102,15 +127,29 @@ mainController.prototype.getById = function (id){
     }
 
     data = {
-        body : list,
+        body : list[0],
         status: true
     }
     object.resource.writeHead(200);
     object.resource.end(JSON.stringify(data));
 }
 
-mainController.prototype.save = function (id) {
+mainController.prototype.save = function (data) {
+    var json,
+        object = this,
+        listOfUsers = this.db.user;
 
+    data.id = listOfUsers.length+1;
+    listOfUsers.push(data);
+    json = JSON.stringify(this.db);
+
+    this.fs.writeFile(fileOfData, json, 'utf8', function (data) {
+        var _data = {
+            status: true
+        }
+        object.resource.writeHead(200);
+        object.resource.end(JSON.stringify(_data));
+    });
 }
 
 module.exports = mainController;

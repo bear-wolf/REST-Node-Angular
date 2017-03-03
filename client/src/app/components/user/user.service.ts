@@ -8,8 +8,7 @@ import {AuthorizationService} from "../authorization/authorization.service";
 
 @Injectable()
 export class UserService {
-    private url = Settings.server+'users';
-    private server = Settings.server;
+    private url = Settings.server+'users/';
     public title = "Page of users";
     private currentUser: User;
     private headers: Headers;
@@ -27,7 +26,7 @@ export class UserService {
         var request;
 
         request = new Request({
-            url: this.server+'users/',
+            url: this.url,
             method: RequestMethod.Get,
             headers: this.headers
         });
@@ -37,7 +36,7 @@ export class UserService {
         var request;
 
         request = new Request({
-            url: this.server+'users/'+id,
+            url: this.url+id,
             method: RequestMethod.Get,
             headers: this.headers
         });
@@ -50,10 +49,10 @@ export class UserService {
         if (model.id) {
             observer = this.http.put(this.url+model.id, model);
         } else {
-            observer = this.http.post(this.url+model.id, model);
+            observer = this.http.post(this.url, model);
         };
 
-        return observer.map(data=>{JSON.parse(data['_body'])});
+        return observer.map(data=>{return JSON.parse(data['_body']);});
     }
 
     // Delete

@@ -7,7 +7,8 @@ import {AuthorizationComponent} from "./components/authorization/authorization.c
 
 export const appRoutes: Routes = [
     { path: 'users', component: UserComponent, children:[
-            { path: 'add', component: UserAddComponent}
+            { path: 'add', component: UserAddComponent},
+            { path: ':id/edit', component: UserAddComponent}
         ] },
     { path: 'login', component: AuthorizationComponent, data:{} },
     { path: '', component: HomeComponent}

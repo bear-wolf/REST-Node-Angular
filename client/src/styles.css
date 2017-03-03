@@ -1,8 +1,14 @@
 @import "css/bootstrap.min.css";
 @import "css/bucket-style.css";
 @import "css/bucket-ico-fonts.css";
+ul {
+  padding: 0!important;
+}
 ul li {
   list-style: none!important;
+}
+body {
+  font-size: 14px;
 }
 .title {
   display: block;
@@ -36,4 +42,32 @@ ul.top-menu > li > a:hover {
   line-height: 35px;
   border-radius: 10px;
   margin: 10px 0;
+}
+.b_page .title {
+  margin: 15px auto;
+  position: relative;
+}
+.b_page .title .btn {
+  position: absolute;
+  right: 0;
+  top: -8px;
+}
+.b_page .b_error {
+  color: red;
+}
+.b_content {
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 5px;
+  min-height: 50px;
+}
+.b_content .inputs-label {
+  padding: 0;
+  font-size: 14px;
+}
+.b_content .title {
+  font-weight: bold!important;
+  font-size: 14px;
+  padding: 0 15px;
+  text-align: left!important;
 }
