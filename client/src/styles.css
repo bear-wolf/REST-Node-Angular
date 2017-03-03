@@ -51,6 +51,7 @@ ul.top-menu > li > a:hover {
   position: absolute;
   right: 0;
   top: -8px;
+  color: white;
 }
 .b_page .b_error {
   color: red;

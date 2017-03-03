@@ -12,7 +12,7 @@
 
   <div class="row b_content">
     <label class="title" [innerText]="'All records: '+ usersOfCount"></label>
-    <div *ngIf="users.length">
+    <div *ngIf="usersOfCount">
       <table class="table">
         <thead>
         <tr>
@@ -25,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of users; let i = index;">
+        <tr *ngFor="let user of users | async; let i = index;">
           <td>{{i}}</td>
           <td>{{user.email}}</td>
           <td>***</td>

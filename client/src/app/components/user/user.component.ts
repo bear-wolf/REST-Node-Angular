@@ -2,6 +2,7 @@ import {Component, OnInit, OnChanges, OnDestroy, DoCheck, AfterContentInit, Afte
 import {UserService} from "./user.service";
 import {User} from "./../../model/user";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-user',
@@ -9,16 +10,14 @@ import {Router} from "@angular/router";
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit { // OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked
-  users: User[];
+  users: Observable<User[]>;
   title: string;
   usersOfCount = 0;
-  isChildRoute: boolean;
 
   constructor(
       private userService: UserService
   ) {
       console.log('UserComponent');
-      this.users = [];
   }
 
   ngOnInit() {
@@ -26,11 +25,13 @@ export class UserComponent implements OnInit { // OnChanges, OnDestroy, DoCheck,
   }
 
   get(){
-      this.userService.get().subscribe(
+      this.userService.getUsersAsObserver
+          .map((data)=>{ return JSON.parse(data['_body']);})
+          .subscribe(
           (data)=> {
               if (data['status']) {
-                  this.users = data['body'];
-                  this.usersOfCount = this.users.length;
+                  this.users = Observable.of(data['body']);
+                  this.usersOfCount = data['body'].length;
               }
           })
   }

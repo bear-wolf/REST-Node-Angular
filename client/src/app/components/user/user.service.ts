@@ -10,6 +10,7 @@ import {AuthorizationService} from "../authorization/authorization.service";
 export class UserService {
     private url = Settings.server+'users/';
     public title = "Page of users";
+    public getUsersAsObserver: Observable<Response>;
     private currentUser: User;
     private headers: Headers;
 
@@ -20,6 +21,8 @@ export class UserService {
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
+
+        this.getUsers();
     }
 
     get (): Observable<User[]> {
@@ -32,6 +35,18 @@ export class UserService {
         });
         return this.http.request(request).map((data)=>{ return JSON.parse(data['_body']);});
     }
+
+    private getUsers() {
+        var request;
+
+        request = new Request({
+            url: this.url,
+            method: RequestMethod.Get,
+            headers: this.headers
+        });
+        this.getUsersAsObserver = this.http.request(request);
+    }
+
     getById (id:string): Observable<User>  {
         var request;
 
@@ -51,6 +66,8 @@ export class UserService {
         } else {
             observer = this.http.post(this.url, model);
         };
+
+        this.getUsers();
 
         return observer.map(data=>{return JSON.parse(data['_body']);});
     }
