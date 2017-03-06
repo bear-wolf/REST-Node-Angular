@@ -10,13 +10,21 @@
 ## Для запуску сервера
  Запускати з каталогу server
  
-    sudo npm install 
+    sudo npm install
+    node index.js
         
     http://localhost:3001
  
 ## Для запуску клієнта
  Запускати з каталогу client
   
-    sudo npm install
-        
+    sudo npm install -g @angular/cli
+    sudo npm install    
+    ng serve
+      
     http://localhost:4200/
+
+## Авторизація на сайті
+    
+    логін: admin@admin.ua
+    пароль: admin
