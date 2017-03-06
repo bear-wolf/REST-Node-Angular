@@ -11,6 +11,9 @@ route.prototype.addHeader = function(res) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type'); // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Credentials', true);
 }
+route.prototype.isAuth = function () {
+
+},
 route.prototype.init = function () {
     var object = this;
 
@@ -77,11 +80,9 @@ route.prototype.init = function () {
     object.app.get('/users', function (req, res) {
         (new mainController(res)).get();
     });
-    object.app.post('/users', function (req, res) {
-        (new mainController(res)).save(req.body);
-    });
     object.app.all('/users/:id', function (req, res, next) {
         switch (req.method) {
+            case 'PUT':
             case 'POST': {
                 (new mainController(res)).save(req.body);
                 break;
@@ -94,11 +95,15 @@ route.prototype.init = function () {
                 (new mainController(res)).removeById(req.url.substring(req.url.lastIndexOf('/')+1));
                 break
             }
-            default: break;
+            default: {
+                next(); // pass control to the next handler
+                break;
+            }
         }
-        next(); // pass control to the next handler
     });
-
+    object.app.post('/users', function (req, res) {
+        (new mainController(res)).save(req.body);
+    });
     this.app.use(function (req, res) {
         res.statusCode = 404;
         res.end('Page no found');

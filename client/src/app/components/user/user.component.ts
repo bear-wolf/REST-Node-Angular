@@ -1,7 +1,10 @@
-import {Component, OnInit, OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked} from '@angular/core';
+import {
+    Component, OnInit, OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked,
+    AfterViewInit
+} from '@angular/core';
 import {UserService} from "./user.service";
 import {User} from "./../../model/user";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
 
 @Component({
@@ -9,15 +12,16 @@ import {Observable} from "rxjs";
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit { // OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked
+export class UserComponent implements OnInit, DoCheck { // OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked
   users: Observable<User[]>;
   title: string;
   usersOfCount = 0;
 
   constructor(
-      private userService: UserService
+      private userService: UserService,
+      private router: Router,
+      private route: ActivatedRoute,
   ) {
-      console.log('UserComponent');
   }
 
   ngOnInit() {
@@ -58,12 +62,13 @@ export class UserComponent implements OnInit { // OnChanges, OnDestroy, DoCheck,
     // ngAfterContentInit(){
     //     console.log('ngAfterContentInit');
     // }
-    // ngAfterContentChecked(){
-    //     console.log('ngAfterContentChecked');
-    // }
-    // ngAfterViewInit(){
-    //     console.log('ngAfterViewInit');
-    // }
+    ngDoCheck(){
+        if (this.route.queryParams['value']['reload']) {
+
+            this.router.navigateByUrl('/users');
+            this.get();
+        }
+    }
     // ngAfterViewChecked(){
     //     console.log('ngAfterViewChecked');
     // }

@@ -14,3 +14,8 @@ export class User {
         this.email = obj && obj.email;
     };
 }
+
+export enum statusOfUser{
+    user = 0,
+    admin = 1
+}

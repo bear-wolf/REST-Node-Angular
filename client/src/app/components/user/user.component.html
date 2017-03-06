@@ -29,8 +29,8 @@
           <td>{{i}}</td>
           <td>{{user.email}}</td>
           <td>***</td>
-          <td>{{user.dataCreate}}</td>
-          <td>{{user.dataUpdate}}</td>
+          <td>{{user.dataCreate | date:format}}</td>
+          <td>{{user.dataUpdate | date:format}}</td>
           <td>
             <a href="javascript:void(0)" (click)="remove(user.id)" >delete</a>
             <a [routerLink]="['/users/'+user.id+'/edit']">update</a>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../../model/user";
+import {User, statusOfUser} from "../../../model/user";
 import {FormBuilder, FormGroup, NgForm, FormControl} from "@angular/forms";
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Rx";
@@ -21,7 +21,6 @@ export class UserAddComponent implements OnInit {
   constructor(private userService: UserService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
-    console.log('UserAddComponent');
   }
 
   ngOnInit() {
@@ -31,8 +30,11 @@ export class UserAddComponent implements OnInit {
     this.submitted = false;
 
     object.user = new FormGroup({
+          id: new FormControl(''),
           password: new FormControl('', UserValidator.required),
-          email: new FormControl('', UserValidator.email)
+          email: new FormControl('', UserValidator.email),
+          dataCreate: new FormControl(''),
+          status: new FormControl(statusOfUser.user)
       });
 
     let subscription = this.activatedRoute.params.subscribe(
@@ -46,10 +48,12 @@ export class UserAddComponent implements OnInit {
                 (data) => {
                     if (data.status) {
                         data = data['body'];
+                        (<FormControl>this.user.controls['id']).setValue(data.id);
                         (<FormControl>this.user.controls['password']).setValue(data.password);
                         (<FormControl>this.user.controls['email']).setValue(data.email);
-                    }
-                });
+                        (<FormControl>this.user.controls['dataCreate']).setValue(data.dataCreate);
+                        (<FormControl>this.user.controls['status']).setValue(data.status);
+                }});
           }
         });
   }
@@ -60,13 +64,16 @@ export class UserAddComponent implements OnInit {
           currentTime = (new Date()).getTime();
 
     if (validation) {
-        data.status = 0; // user
         (data.id) ? data.dataUpdate = currentTime : data.dataCreate = currentTime;
 
       this.userService.save(data)
           .subscribe((data)=>{
               if (data.status) {
-                  object.router.navigate(['/users']);
+                  object.router.navigate(['/users'], {
+                      queryParams:{
+                          reload: true
+                        }
+                  });
               }
           },
           error=>{

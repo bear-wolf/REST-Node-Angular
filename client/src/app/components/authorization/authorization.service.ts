@@ -15,7 +15,6 @@ export class AuthorizationService {
     private server = Settings.server;
 
     constructor(private http: Http) {
-        console.log('AuthorizationService constructor()');
     }
 
     logIn(email:string, password: string): Observable<User> {

@@ -16,7 +16,6 @@ export class UserService {
 
     constructor(private http: Http,
                 private authService: AuthorizationService) {
-        console.log('userService constructor()');
         this.currentUser = this.authService.getCurrentUser();
 
         this.headers = new Headers();
@@ -65,7 +64,7 @@ export class UserService {
             observer = this.http.put(this.url+model.id, model);
         } else {
             observer = this.http.post(this.url, model);
-        };
+        }
 
         this.getUsers();
 

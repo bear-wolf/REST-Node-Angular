@@ -137,12 +137,24 @@ mainController.prototype.getById = function (id){
 mainController.prototype.save = function (data) {
     var json,
         object = this,
-        listOfUsers = this.db.user;
+        listOfUsers = this.db.user,
+        arrLength = listOfUsers.length;
 
-    data.id = listOfUsers.length+1;
-    listOfUsers.push(data);
+    if (!data.id) {
+        //save
+        data.id = listOfUsers.length+1;
+        listOfUsers.push(data);
+    } else {
+        //update
+        for (var key = 0; key < arrLength; key++) {
+            if (listOfUsers[key].id == data.id) {
+                listOfUsers[key] = data;
+                break;
+            }
+        }
+    }
+
     json = JSON.stringify(this.db);
-
     this.fs.writeFile(fileOfData, json, 'utf8', function (data) {
         var _data = {
             status: true

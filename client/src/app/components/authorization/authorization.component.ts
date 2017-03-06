@@ -22,7 +22,7 @@ export class AuthorizationComponent implements OnInit {
       private router: Router,
       private authService: AuthorizationService
   ) {
-      console.log('authorization()');
+
   }
 
   ngOnInit() {
